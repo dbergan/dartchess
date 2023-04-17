@@ -1043,15 +1043,14 @@ abstract class Position<T extends Position<T>> {
   ///
   /// Returns the [CastlingSide] or `null` if the move is a regular move.
   CastlingSide? _getCastlingSide(Move move) {
-    if (move is! NormalMove) return null;
-    if (turn == Side.white && move.to > 7) return null;
-    if (turn == Side.black && move.to < 56) return null;
-    if (!board.kings.has(move.from)) return null;
-    if (!board.bySide(turn).has(move.from)) return null;
-
-    final delta = move.to - move.from;
-    if (delta.abs() == 2 ||
-        (board.bySide(turn).has(move.to) && board.rooks.has(move.to))) {
+    if (move is NormalMove) {
+      final delta = move.to - move.from;
+      if (delta.abs() != 2 && !board.bySide(turn).has(move.to)) {
+        return null;
+      }
+      if (!board.kings.has(move.from)) {
+        return null;
+      }
       return delta > 0 ? CastlingSide.king : CastlingSide.queen;
     }
     return null;

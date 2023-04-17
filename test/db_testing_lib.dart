@@ -61,17 +61,10 @@ class MyExpectations {
 
   const MyExpectations(
       {required this.legalMoves,
-      this.legalDrops = 0,
-      this.legalDropZone = DropZone.none,
-      this.rolesThatCanDrop = const <Role>[],
-      this.rolesThatCantDrop = const <Role>[
-        Role.king,
-        Role.queen,
-        Role.rook,
-        Role.bishop,
-        Role.knight,
-        Role.pawn,
-      ]});
+      required this.legalDrops,
+      required this.legalDropZone,
+      required this.rolesThatCanDrop,
+      required this.rolesThatCantDrop});
 
   String testLegalMoves(List<Move> a) {
     if (a.whereType<NormalMove>().length != legalMoves) {
